@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Register - Course Application</title>
+</head>
+<body>
+  <h1>Register</h1>
+  <form id="registrationForm">
+    <input type="text" id="username" placeholder="Username" required /><br />
+    <input type="password" id="password" placeholder="Password" required /><br />
+    <select id="role" required>
+      <option value="">Select Role</option>
+      <option value="student">Student</option>
+      <option value="teacher">Teacher</option>
+    </select><br />
+    <button type="submit">Register</button>
+  </form>
+  <p>Already have an account? <a href="Login.html">Login here</a></p>
+  
+  <script src="scripts/Auth.js"></script>
+</body>
+</html>
