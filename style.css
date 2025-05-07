@@ -1,0 +1,21 @@
+/* styles/style.css */
+
+/* Set a light background for the overall application */
+body {
+  background-color: #f8f9fa;
+}
+
+/* Add spacing to headings */
+h1 {
+  margin-bottom: 20px;
+}
+
+/* Add a little margin below the navbar */
+.navbar {
+  margin-bottom: 20px;
+}
+
+/* Custom styling for form controls, if needed */
+.form-group {
+  margin-bottom: 15px;
+}

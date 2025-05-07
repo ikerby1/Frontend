@@ -2,41 +2,54 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Course Front End - Add Course</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="scripts/add_course.js"></script>
   <script defer src="/scripts/auth.js"></script>
   <script defer src="scripts/init.js"></script>
 </head>
 <body>
-  <nav>
-    <a href="index.html">All Courses</a>
-    <a href="add_course.html">Add Course</a>
-    <a href="delete.html">Delete Course</a>
-    <button id="logout" style="float: right;">Logout</button>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <a class="navbar-brand" href="index.html">CourseApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a href="index.html" class="nav-link">All Courses</a></li>
+        <li class="nav-item active"><a href="add_course.html" class="nav-link">Add Course</a></li>
+        <li class="nav-item"><a href="delete.html" class="nav-link">Delete Course</a></li>
+      </ul>
+      <button id="logout" class="btn btn-outline-light">Logout</button>
+    </div>
   </nav>
-  <h1>Add a Course</h1>
-  <form>
-    <div>
-      <label for="courseName">Course Name:</label>
-      <input type="text" id="courseName">
-    </div>
-    <div>
-      <label for="courseDescription">Description:</label>
-      <textarea id="courseDescription"></textarea>
-    </div>
-    <div>
-      <label for="courseSubject">Subject Area:</label>
-      <input type="text" id="courseSubject">
-    </div>
-    <div>
-      <label for="courseCredits">Credits:</label>
-      <input type="number" id="courseCredits" min="0">
-    </div>
-    <div>
-      <input type="button" id="addBtn" value="Add Course">
-    </div>
-    <div id="error"></div>
-  </form>
+  <div class="container">
+    <h1>Add a Course</h1>
+    <form>
+      <div class="form-group">
+        <label for="courseName">Course Name:</label>
+        <input type="text" id="courseName" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="courseDescription">Description:</label>
+        <textarea id="courseDescription" class="form-control"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="courseSubject">Subject Area:</label>
+        <input type="text" id="courseSubject" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="courseCredits">Credits:</label>
+        <input type="number" id="courseCredits" min="0" class="form-control">
+      </div>
+      <div class="form-group">
+        <input type="button" id="addBtn" class="btn btn-primary" value="Add Course">
+      </div>
+      <div id="error" class="text-danger"></div>
+    </form>
+  </div>
 </body>
 </html>
