@@ -1,39 +1,49 @@
-/* Delete.js - Handles course deletion for teachers */
+/* delete.js - Handles course deletion */
 
-function getQueryParam(param) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
+async function populateCourses() {
+  try {
+    const res = await fetch('/api/courses');
+    const courses = await res.json();
+    const dropdown = document.getElementById('courseDropDown');
+    dropdown.innerHTML = "";
+    courses.forEach(course => {
+      const option = document.createElement('option');
+      option.value = course._id;
+      option.text = course.name;
+      dropdown.appendChild(option);
+    });
+  } catch (err) {
+    console.error(err);
+    document.getElementById('error').innerText = "Error loading courses.";
+  }
 }
 
-document.getElementById('confirmDelete').addEventListener('click', async function() {
-    const courseId = getQueryParam('id');
-    if (!courseId) {
-        alert("No course ID provided.");
-        return;
+window.addEventListener('DOMContentLoaded', populateCourses);
+
+document.getElementById('deleteBtn').addEventListener('click', async function(e) {
+  e.preventDefault();
+  const courseId = document.getElementById('courseDropDown').value;
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert("You must be logged in as a teacher to delete courses.");
+    return;
+  }
+  try {
+    const res = await fetch(`/api/courses/${courseId}`, {
+      method: 'DELETE',
+      headers: {
+        'x-auth-token': token
+      }
+    });
+    const data = await res.json();
+    if (data.error) {
+      document.getElementById('error').innerText = data.error;
+    } else {
+      alert("Course deleted successfully!");
+      populateCourses(); // Refresh list after deletion.
     }
-    
-    const token = localStorage.getItem('token');
-    if (!token) {
-        alert("You must be logged in as a teacher to delete courses.");
-        return;
-    }
-    
-    try {
-        const res = await fetch(`/api/courses/${courseId}`, {
-            method: 'DELETE',
-            headers: {
-              'x-auth-token': token
-            }
-        });
-        const data = await res.json();
-        if (data.error) {
-            alert(data.error);
-        } else {
-            alert("Course deleted successfully!");
-            window.location.href = 'Index.html';
-        }
-    } catch (err) {
-        console.error(err);
-        alert("Error deleting course.");
-    }
+  } catch (err) {
+    console.error(err);
+    document.getElementById('error').innerText = "Error deleting course.";
+  }
 });

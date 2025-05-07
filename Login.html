@@ -1,18 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login - Course Application</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course App Login</title>
+  <script src="scripts/login.js"></script>
 </head>
 <body>
+  <nav>
+    <a href="index.html">All Courses</a>
+    <a href="add_course.html">Add Course</a>
+    <a href="delete.html">Delete Course</a>
+  </nav>
   <h1>Login</h1>
-  <form id="loginForm">
-    <input type="text" id="username" placeholder="Username" required /><br />
-    <input type="password" id="password" placeholder="Password" required /><br />
-    <button type="submit">Login</button>
+  <form id="login" autocomplete="off">
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username">
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password">
+    </div>
+    <button id="loginBtn" type="button">Login</button>
+    <p id="errorMsg"></p>
   </form>
-  <p>Don't have an account? <a href="Registration.html">Register here</a></p>
-  
-  <script src="scripts/Login.js"></script>
+  <p>Not registered? <a href="registration.html">Click here to register</a></p>
+  <button id="statusBtn">Display Status</button>
 </body>
 </html>

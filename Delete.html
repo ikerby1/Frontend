@@ -1,13 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Delete Course - Course Application</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Front End - Delete Course</title>
+  <script src="scripts/delete.js"></script>
+  <script defer src="/scripts/auth.js"></script>
+  <script defer src="scripts/init.js"></script>
 </head>
 <body>
-  <h1>Delete Course</h1>
-  <p>Are you sure you want to delete this course?</p>
-  <button id="confirmDelete">Yes, Delete</button>
-  <script src="scripts/Delete.js"></script>
+  <nav>
+    <a href="index.html">All Courses</a>
+    <a href="add_course.html">Add Course</a>
+    <a href="delete.html">Delete Course</a>
+    <button id="logout" style="float: right;">Logout</button>
+  </nav>
+  <h1>Delete a Course</h1>
+  <form>
+    <div>
+      <select id="courseDropDown"></select>
+    </div>
+    <div>
+      <input type="button" id="deleteBtn" value="Delete Course">
+    </div>
+    <div id="error"></div>
+  </form>
 </body>
 </html>

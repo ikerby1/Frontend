@@ -1,38 +1,37 @@
-/* Add_course.js - Handles adding new courses (for teachers) */
+/* add_course.js - Handles adding new courses */
 
-document.getElementById('addCourseForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const name = document.getElementById('courseName').value;
-    const description = document.getElementById('courseDescription').value;
-    const subject = document.getElementById('courseSubject').value;
-    const credits = document.getElementById('courseCredits').value;
-    
-    const token = localStorage.getItem('token');
-    if (!token) {
-        alert("You must be logged in as a teacher to add courses.");
-        return;
+document.getElementById('addBtn').addEventListener('click', async function(e) {
+  e.preventDefault();
+  
+  const courseName = document.getElementById('courseName').value;
+  const courseDescription = document.getElementById('courseDescription').value;
+  const courseSubject = document.getElementById('courseSubject').value;
+  const courseCredits = document.getElementById('courseCredits').value;
+  
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert("You must be logged in as a teacher to add courses.");
+    return;
+  }
+  
+  try {
+    const res = await fetch('/api/courses', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': token
+      },
+      body: JSON.stringify({ name: courseName, description: courseDescription, subject: courseSubject, credits: courseCredits })
+    });
+    const data = await res.json();
+    if (data.error) {
+      document.getElementById('error').innerText = data.error;
+    } else {
+      alert("Course added successfully!");
+      window.location.href = 'index.html';
     }
-    
-    try {
-        const res = await fetch('/api/courses', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-auth-token': token
-            },
-            body: JSON.stringify({ name, description, subject, credits })
-        });
-        
-        const data = await res.json();
-        if (data.error) {
-            alert(data.error);
-        } else {
-            alert("Course added successfully!");
-            window.location.href = 'Index.html';
-        }
-    } catch (err) {
-        console.error(err);
-        alert("Error adding course.");
-    }
+  } catch (err) {
+    console.error(err);
+    document.getElementById('error').innerText = "Error adding course.";
+  }
 });
