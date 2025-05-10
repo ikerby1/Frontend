@@ -12,6 +12,30 @@ function removeToken() {
   localStorage.removeItem('token');
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+  const token = localStorage.getItem('token');
+  const navBar = document.querySelector('nav ul');
+  if (token) {
+      // Show logout button; optionally ensure the logout button is visible.
+      document.getElementById('logout').style.display = 'block';
+  } else {
+      // Remove logout button and add a login link.
+      const logoutBtn = document.getElementById('logout');
+      if(logoutBtn) {
+          logoutBtn.style.display = 'none';
+      }
+      // Optionally, insert a login link into the nav.
+      const loginLink = document.createElement('a');
+      loginLink.href = 'login.html';
+      loginLink.textContent = 'Login';
+      loginLink.className = 'nav-link';
+      const li = document.createElement('li');
+      li.className = 'nav-item';
+      li.appendChild(loginLink);
+      navBar.appendChild(li);
+  }
+});
+
 // Registration form handling
 if (document.getElementById('registrationForm')) {
   document.getElementById('registerBtn').addEventListener('click', async function(e) {
@@ -42,29 +66,7 @@ if (document.getElementById('registrationForm')) {
   });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  const token = localStorage.getItem('token');
-  const navBar = document.querySelector('nav ul');
-  if (token) {
-      // Show logout button; optionally ensure the logout button is visible.
-      document.getElementById('logout').style.display = 'block';
-  } else {
-      // Remove logout button and add a login link.
-      const logoutBtn = document.getElementById('logout');
-      if(logoutBtn) {
-          logoutBtn.style.display = 'none';
-      }
-      // Optionally, insert a login link into the nav.
-      const loginLink = document.createElement('a');
-      loginLink.href = 'login.html';
-      loginLink.textContent = 'Login';
-      loginLink.className = 'nav-link';
-      const li = document.createElement('li');
-      li.className = 'nav-item';
-      li.appendChild(loginLink);
-      navBar.appendChild(li);
-  }
-});
+
 
 
 // Logout functionality
