@@ -12,15 +12,6 @@ function removeToken() {
   localStorage.removeItem('token');
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const token = localStorage.getItem('token');
-  // If no token is found, redirect to the login page.
-  if (!token) {
-
-  }
-});
-
-/*
 document.addEventListener('DOMContentLoaded', function() {
   const token = localStorage.getItem('token');
   const navBar = document.querySelector('nav ul');
@@ -44,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
       navBar.appendChild(li);
   }
 });
-*/
 
 // Registration form handling
 if (document.getElementById('registrationForm')) {

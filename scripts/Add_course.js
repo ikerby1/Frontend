@@ -1,5 +1,38 @@
 /* add_course.js - Handles adding new courses */
 
+addEventListener("DOMContentLoaded", function(){
+  this.document.querySelector("#addbtn").addEventListener("click", addCourse)
+})
+
+async function addCourse(){
+  const course = {
+    courseName: document.querySelector("#courseName").value,
+    courseSubject: document.querySelector("#courseSubject").value,
+    courseCredits: document.querySelector("#courseCredits").value,
+    courseDescription: document.querySelector("#courseDescription").value
+  }
+
+  const response = await fetch("http://localhost:3000/api/courses", {
+    method: "POST",
+    headers: {
+      "Content-Type" : "application/json"
+    },
+    body: JSON.stringify(course)
+  })
+
+  if(response.ok){
+    const results = await response.json()
+    alert("Course added with ID: " + results._id)
+
+    document.querySelector("form").reset()
+  }
+
+  else{
+    document.querySelector("error").innerHTML = "Cannot add course"
+  }
+}
+
+/*
 document.getElementById('addBtn').addEventListener('click', async function(e) {
   e.preventDefault();
   
@@ -35,3 +68,4 @@ document.getElementById('addBtn').addEventListener('click', async function(e) {
     document.getElementById('error').innerText = "Error adding course.";
   }
 });
+*/
