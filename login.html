@@ -7,17 +7,31 @@
   <link rel="stylesheet" href="styles/style.css">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="scripts/login.js"></script>
+  
+  <!-- jQuery and Bootstrap JS (loaded with defer) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" defer></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" defer></script>
+  
+  <!-- Application Scripts (loaded with defer) -->
+  <script src="scripts/auth.js" defer></script>
+  <script src="scripts/init.js" defer></script>
+  <script src="scripts/login.js" defer></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+   <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
     <a class="navbar-brand" href="index.html">CourseApp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
+       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mr-auto">
@@ -25,6 +39,7 @@
          <li class="nav-item"><a href="add_course.html" class="nav-link">Add Course</a></li>
          <li class="nav-item"><a href="delete.html" class="nav-link">Delete Course</a></li>
       </ul>
+      <!-- No authSection here because the user must log in -->
     </div>
   </nav>
   <div class="container">
@@ -44,11 +59,5 @@
     <p>Not registered? <a href="registration.html">Click here to register</a></p>
     <button id="statusBtn" class="btn btn-info">Display Status</button>
   </div>
-
-<!-- Application Scripts -->
-<script defer src="scripts/auth.js"></script>
-<script defer src="scripts/init.js"></script>
-<script defer src="scripts/add_course.js"></script>
-
 </body>
 </html>

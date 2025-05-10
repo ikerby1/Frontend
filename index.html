@@ -7,16 +7,43 @@
   <link rel="stylesheet" href="styles/style.css">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="scripts/script.js"></script>
-  <script defer src="/scripts/auth.js"></script>
-  <script defer src="scripts/init.js"></script>
+  
+  <!-- jQuery and Bootstrap JS (load with defer) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" defer></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" defer></script>
+  
+  <!-- Application Scripts (loaded with defer) -->
+  <script src="scripts/auth.js" defer></script>
+  <script src="scripts/init.js" defer></script>
+  <script src="scripts/script.js" defer></script>
+  
+  <script>
+    // If no token is present, redirect them to login.html.
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = 'login.html';
+      }
+      
+      // CHANGED: Dynamically update the navbar's authentication section.
+      let authSection = document.getElementById('authSection');
+      if (!authSection) {
+        // Create authSection if it doesn't exist.
+        authSection = document.createElement('div');
+        authSection.id = 'authSection';
+        document.querySelector('.navbar .collapse').appendChild(authSection);
+      }
+      authSection.innerHTML = '<button id="logout" class="btn btn-outline-light ml-auto">Logout</button>';
+      document.getElementById('logout').addEventListener('click', () => {
+        localStorage.removeItem('token');
+        window.location.href = 'login.html';
+      });
+    });
+  </script>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
     <a class="navbar-brand" href="index.html">CourseApp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
@@ -27,17 +54,13 @@
          <li class="nav-item"><a href="add_course.html" class="nav-link">Add Course</a></li>
          <li class="nav-item"><a href="delete.html" class="nav-link">Delete Course</a></li>
       </ul>
+      <!-- The authSection div will be populated dynamically by our inline script -->
+      <div id="authSection"></div>
     </div>
   </nav>
   <div class="container">
     <h1>Courses</h1>
     <div id="list_of_courses" class="list-group"></div>
   </div>
-
-<!-- Application Scripts -->
-<script defer src="scripts/auth.js"></script>
-<script defer src="scripts/init.js"></script>
-<script defer src="scripts/add_course.js"></script>
-
 </body>
 </html>
