@@ -1,78 +1,41 @@
-/* auth.js - Contains helper functions for authentication */
+console.log("Frontend initialized.");
 
-function setToken(token) {
-  localStorage.setItem('token', token);
-}
+document.addEventListener("DOMContentLoaded", () => {
+  // Only run protected-page logic if we are NOT on a public page.
+  const publicPages = ["login.html", "registration.html"];
+  const currentPage = window.location.pathname.split("/").pop();
+  if (publicPages.includes(currentPage)) {
+    // On public pages, do not update the nav or force redirection.
+    return;
+  }
 
-function getToken() {
-  return localStorage.getItem('token');
-}
+  const token = localStorage.getItem("token");
+  const navBar = document.querySelector("nav .navbar-nav");
+  const logoutBtn = document.getElementById("logout");
 
-function removeToken() {
-  localStorage.removeItem('token');
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  const token = localStorage.getItem('token');
-  const navBar = document.querySelector('nav ul');
-  if (token) {
-      // Show logout button; optionally ensure the logout button is visible.
-      document.getElementById('logout').style.display = 'block';
-  } else {
-      // Remove logout button and add a login link.
-      const logoutBtn = document.getElementById('logout');
-      if(logoutBtn) {
-          logoutBtn.style.display = 'none';
-      }
-      // Optionally, insert a login link into the nav.
-      const loginLink = document.createElement('a');
-      loginLink.href = 'login.html';
-      loginLink.textContent = 'Login';
-      loginLink.className = 'nav-link';
-      const li = document.createElement('li');
-      li.className = 'nav-item';
-      li.appendChild(loginLink);
+  if (!token) {
+    if (logoutBtn) {
+      logoutBtn.style.display = "none";
+    }
+    // Remove any existing login links (to avoid duplicates) before adding one.
+    const existingLoginLink = document.getElementById("loginLink");
+    if (!existingLoginLink && navBar) {
+      const li = document.createElement("li");
+      li.className = "nav-item";
+      const a = document.createElement("a");
+      a.href = "login.html";
+      a.textContent = "Login";
+      a.className = "nav-link";
+      a.id = "loginLink";
+      li.appendChild(a);
       navBar.appendChild(li);
+    }
+    // Optionally, you might want to force a redirect here by uncommenting:
+    // window.location.href = "login.html";
+  } else {
+    // When the user is authenticated, ensure the Logout button is visible.
+    if (logoutBtn) {
+      logoutBtn.style.display = "block";
+    }
   }
 });
-
-// Registration form handling
-if (document.getElementById('registrationForm')) {
-  document.getElementById('registerBtn').addEventListener('click', async function(e) {
-    e.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const role = document.getElementById('role').value;
-    
-    try {
-      const res = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password, role })
-      });
-      const data = await res.json();
-      if (data.error) {
-        document.getElementById('error').innerText = data.error;
-      } else {
-        alert("Registration successful! Please login.");
-        window.location.href = 'login.html';
-      }
-    } catch (err) {
-      console.error(err);
-      document.getElementById('error').innerText = "Registration failed.";
-    }
-  });
-}
-
-
-
-
-// Logout functionality
-if (document.getElementById('logout')) {
-  document.getElementById('logout').addEventListener('click', function() {
-    removeToken();
-    window.location.href = 'login.html';
-  });
-}
